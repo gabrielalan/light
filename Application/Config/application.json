@@ -1,0 +1,10 @@
+{
+	"general": {},
+
+	"namespaces": [
+		{
+			"namespace": "Application",
+			"baseDir": "./Application"
+		}
+	]
+}
