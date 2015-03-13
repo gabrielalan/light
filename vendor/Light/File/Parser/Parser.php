@@ -31,6 +31,14 @@ abstract class Parser implements ParserInterface {
 	}
 
 	/**
+	 * Return true if the file is already parsed
+	 * @return boolean
+	 */
+	public function isParsed() {
+		return $this->parsed !== null;
+	}
+
+	/**
 	 * Return a property of instance or parsed data
 	 * @param $name
 	 * @return null

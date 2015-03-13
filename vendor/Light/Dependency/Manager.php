@@ -10,6 +10,11 @@ class Manager extends Dependency {
 	 */
 	protected $instances = array();
 
+	public function __construct() {
+		$this->set('Light\Dependency\Manager', $this);
+		$this->getAwareContainer()->add( 'Light\Dependency\ManagerAwareInterface', 'Light\Dependency\Manager');
+	}
+
 	/**
 	 * Sets a dependency
 	 * @param $name
@@ -17,6 +22,7 @@ class Manager extends Dependency {
 	 * @return mixed|void
 	 */
 	public function set( $name, $instance ) {
+		$this->getAwareContainer()->inject($instance);
 		$this->instances[$name] = $instance;
 	}
 

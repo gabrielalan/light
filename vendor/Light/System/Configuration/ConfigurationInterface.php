@@ -14,4 +14,10 @@ interface ConfigurationInterface {
 	 * @return mixed
 	 */
 	public function setFile( ParserInterface $parser );
+
+	/**
+	 * Read the configuration and execute
+	 * @return mixed
+	 */
+	public function execute();
 } 

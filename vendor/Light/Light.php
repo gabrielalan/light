@@ -4,7 +4,7 @@ namespace Light;
 use Light\Dependency\DependencyInterface;
 use Light\Dependency\Manager;
 use Light\File\Parser\Factory;
-use Light\System\Configuration\Configuration;
+use Light\System\Configuration\LightConfigurator as Configuration;
 use Light\System\Configuration\ConfigurationInterface;
 use Light\System\Loader;
 
@@ -51,5 +51,7 @@ class Light {
 		}
 
 		$this->getDependencyManager()->set('Light\System\Configuration', $config);
+
+		$config->execute();
 	}
 }

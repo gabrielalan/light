@@ -1,5 +1,6 @@
 <?php
 namespace Light\Dependency;
+use Light\Dependency\AwareContainer\ContainerInterface;
 use Light\Dependency\Injection\InjectionInterface;
 
 /**
@@ -18,6 +19,13 @@ interface DependencyInterface {
 	 * @return InjectionInterface
 	 */
 	public function getInjection();
+
+	/**
+	 * Aware container for aware interfaces instances
+	 * @param ContainerInterface $container
+	 * @return mixed
+	 */
+	public function setAwareContainer( ContainerInterface $container );
 
 	/**
 	 * Sets a instance

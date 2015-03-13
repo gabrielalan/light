@@ -11,6 +11,9 @@ class Json extends Parser {
 	 * @return $this|mixed
 	 */
 	public function parse() {
+		if( $this->isParsed() )
+			return $this;
+
 		$content = file_get_contents($this->getPath());
 		$json = json_decode($content);
 
