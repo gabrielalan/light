@@ -53,6 +53,7 @@ abstract class Dependency implements DependencyInterface {
 	 * @return mixed
 	 */
 	public final function setInjection(InjectionInterface $injectionInterface) {
+		$injectionInterface->setManager($this);
 		$this->injection = $injectionInterface;
 	}
 }

@@ -6,5 +6,10 @@
 			"namespace": "Application",
 			"baseDir": "./Application"
 		}
-	]
+	],
+
+	"controllers": {
+		"Application/Controller/Index": "Application/Controller/Index",
+		"Application/Controller/Teste": "Application/Controller/Teste"
+	}
 }

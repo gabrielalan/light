@@ -3,10 +3,24 @@ namespace Light\System\Configuration;
 
 class LightConfigurator extends Configuration {
 
-	public function readNamespaces() {
+	protected function readNamespaces() {
+		$file = $this->getFile();
+
+		if( !$file->namespaces )
+			return false;
+
 		foreach( $this->getFile()->namespaces as $namespace ) {
 			$this->getManager()->get('Light\System\Loader')->addNamespace( $namespace->namespace, realpath($namespace->baseDir) );
 		}
+	}
+
+	protected function readControllers() {
+		$file = $this->getFile();
+
+		if( !$file->controllers )
+			return false;
+
+		var_dump($file->controllers);
 	}
 
 	/**
@@ -15,5 +29,6 @@ class LightConfigurator extends Configuration {
 	 */
 	public function execute() {
 		$this->readNamespaces();
+		$this->readControllers();
 	}
 } 
