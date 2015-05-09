@@ -37,8 +37,8 @@ interface DependencyInterface {
 
 	/**
 	 * Gets the requested instance
-	 * @param $instance string
+	 * @param $name string
 	 * @return mixed
 	 */
-	public function get( $instance );
+	public function get( $name );
 } 

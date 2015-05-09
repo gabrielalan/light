@@ -21,7 +21,9 @@ class LightConfigurator extends Configuration {
 			return false;
 
 		$n = preg_replace('/\//i', '\\', $file->controllers->{'Application/Controller/Index'});
-			$this->getManager()->set('Application\Controller\Index', new $n());
+
+		var_dump($this->getManager());
+		$this->getManager()->set('Application\Controller\Index', function() use($n) { return new $n(); });
 		var_dump($this->getManager()->get('Application\Controller\Index'));
 	}
 

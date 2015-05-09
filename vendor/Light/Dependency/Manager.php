@@ -22,20 +22,43 @@ class Manager extends Dependency {
 	 * @return mixed|void
 	 */
 	public function set( $name, $instance ) {
-		$this->getAwareContainer()->inject($instance);
-		$this->instances[$name] = $instance;
+		if( !is_callable($instance) ) {
+			$this->getAwareContainer()->inject($instance);
+		} else {
+			$instance = function() use($instance) {
+				$object = $instance();
+				$this->getAwareContainer()->inject($object);
+				return $object;
+			};
+		}
+
+		$this->store($name, $instance);
+	}
+
+	/**
+	 * Alias to store the instance (or callable)
+	 * @param $name
+	 * @param $instance
+	 */
+	protected function store( $name, $instance ) {
+		$this->instances[ $name ] = $instance;
 	}
 
 	/**
 	 * Gets a instance of a dependency
-	 * @param string $instance
+	 * @param string $name
 	 * @return mixed
 	 * @throws DependencyNotFound
 	 */
-	public function get( $instance ) {
-		if( !isset( $this->instances[$instance] ) )
-			throw new DependencyNotFound("The dependency {$instance} can not be found");
+	public function get( $name ) {
+		if( !isset( $this->instances[$name] ) )
+			throw new DependencyNotFound("The dependency {$name} can not be found");
 
-		return is_callable($this->instances[$instance]) ? $this->instances[$instance]() : $this->instances[$instance];
+		if( is_callable($this->instances[$name]) ) {
+			$instance = $this->instances[$name]();
+			$this->store($name, $instance);
+		}
+
+		return $this->instances[$name];
 	}
 } 
