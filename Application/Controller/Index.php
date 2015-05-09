@@ -1,12 +1,10 @@
 <?php
 namespace Application\Controller;
 
-use Light\Controller\RouterController;
+use Light\Controller\Controller;
 
-class Index extends RouterController {
-	/**
-	 * @Route("/test/:id", id = null)
-	 */
+class Index extends Controller {
+
 	public function test() {
 
 	}
