@@ -2,6 +2,7 @@
 namespace Light\Dependency;
 
 use Light\Dependency\Exceptions\DependencyNotFound;
+use Light\Dependency\Exceptions\WrongInterface;
 
 class Manager extends Dependency {
 	/**
@@ -47,18 +48,41 @@ class Manager extends Dependency {
 	/**
 	 * Gets a instance of a dependency
 	 * @param string $name
-	 * @return mixed
+	 * @param string $compare
 	 * @throws DependencyNotFound
+	 * @throws WrongInterface
+	 * @return mixed
 	 */
-	public function get( $name ) {
+	public function get( $name, $compare = null ) {
 		if( !isset( $this->instances[$name] ) )
 			throw new DependencyNotFound("The dependency {$name} can not be found");
 
-		if( is_callable($this->instances[$name]) ) {
+		$instance = $this->instances[$name];
+
+		if( is_callable($instance) ) {
 			$instance = $this->instances[$name]();
 			$this->store($name, $instance);
 		}
 
+		if( !empty($compare) && !$this->compare($instance, $compare) ) {
+			throw new WrongInterface("The instance {$name} do not implement the interface '{$compare}'");
+		}
+
 		return $this->instances[$name];
+	}
+
+	/**
+	 * Compare the instance with a interface ou parent classes
+	 * @param $instance
+	 * @param $name
+	 * @return bool
+	 */
+	protected function compare( $instance, $name ) {
+		$reflection = new \ReflectionClass($instance);
+
+		if( $reflection->isSubclassOf($name) || $reflection->implementsInterface($name) )
+			return true;
+
+		return false;
 	}
 } 

@@ -1,5 +1,9 @@
 <?php
 
+/*set_error_handler(function($errno, $errstr){
+	throw new \ErrorException($errstr, $errno);
+});*/
+
 require_once "vendor/Light/System/Loader.php";
 
 $loader = new Light\System\Loader();

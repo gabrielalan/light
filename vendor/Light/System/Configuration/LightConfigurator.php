@@ -1,6 +1,9 @@
 <?php
 namespace Light\System\Configuration;
 
+use Light\Dependency\Exceptions\DependencyNotFound;
+use Light\Router\Manager;
+
 class LightConfigurator extends Configuration {
 
 	protected function readNamespaces() {
@@ -14,17 +17,36 @@ class LightConfigurator extends Configuration {
 		}
 	}
 
-	protected function readControllers() {
+	protected function readRouter() {
 		$file = $this->getFile();
 
-		if( !$file->controllers )
+		$router = $this->getRouterManager();
+
+		if( !$file->router )
 			return false;
 
-		$n = preg_replace('/\//i', '\\', $file->controllers->{'Application/Controller/Index'});
+		foreach( $file->router as $uri => $controllerName ) {
+			$controller = preg_replace('/\//i', '\\', $controllerName);
+			$this->getManager()->set($controller, function() use($controller) { return new $controller(); });
+			$router->addRoute($uri, $controller);
+		}
+	}
 
-		var_dump($this->getManager());
-		$this->getManager()->set('Application\Controller\Index', function() use($n) { return new $n(); });
-		var_dump($this->getManager()->get('Application\Controller\Index'));
+	/**
+	 * Returns the Router/Manager
+	 * @return Manager
+	 */
+	protected function getRouterManager() {
+		$manager = $this->getManager();
+
+		try {
+			$router = $manager->get('Light\Router\Manager', '\Light\Router\ManagerInterface');
+		} catch( DependencyNotFound $exception ) {
+			$router = new Manager();
+			$manager->set('Light\Router\Manager', $router);
+		}
+
+		return $router;
 	}
 
 	/**
@@ -33,6 +55,6 @@ class LightConfigurator extends Configuration {
 	 */
 	public function execute() {
 		$this->readNamespaces();
-		$this->readControllers();
+		$this->readRouter();
 	}
 } 

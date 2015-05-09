@@ -41,17 +41,23 @@ class Light {
 	 * @throws File\Parser\Exceptions\ParserNotFoundException
 	 */
 	public function run( $configuration ) {
-		$dm = $this->getDependencyManager();
+		try {
+			$dm = $this->getDependencyManager();
 
-		if( $configuration instanceof ConfigurationInterface ) {
-			$config = $configuration;
-		} else {
-			$file = Factory::createByType($configuration);
-			$config = new Configuration($file);
+			if ($configuration instanceof ConfigurationInterface) {
+				$config = $configuration;
+			} else {
+				$file = Factory::createByType($configuration);
+				$config = new Configuration($file);
+			}
+
+			$dm->set('Light\System\Configuration', $config);
+
+			$config->execute();
+
+			$dm->get('Light\Router\Manager')->dispatch();
+		} catch( \Exception $exception ) {
+			var_dump($exception);
 		}
-
-		$this->getDependencyManager()->set('Light\System\Configuration', $config);
-
-		$config->execute();
 	}
 }

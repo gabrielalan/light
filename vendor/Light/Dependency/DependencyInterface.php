@@ -28,6 +28,12 @@ interface DependencyInterface {
 	public function setAwareContainer( ContainerInterface $container );
 
 	/**
+	 * Return the Aware Container
+	 * @return ContainerInterface
+	 */
+	public function getAwareContainer();
+
+	/**
 	 * Sets a instance
 	 * @param $name
 	 * @param $instance

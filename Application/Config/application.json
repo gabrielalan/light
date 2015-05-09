@@ -8,8 +8,8 @@
 		}
 	],
 
-	"controllers": {
-		"Application/Controller/Index": "Application/Controller/Index",
-		"Application/Controller/Teste": "Application/Controller/Teste"
+	"router": {
+		"/hello": "Application/Controller/Teste",
+		"/": "Application/Controller/Index"
 	}
 }
