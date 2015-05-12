@@ -46,6 +46,15 @@ class Manager extends Dependency {
 	}
 
 	/**
+	 * Returns true if the dependency exists
+	 * @param string $name
+	 * @return bool|mixed
+	 */
+	public function has( $name ) {
+		return isset( $this->instances[ $name ] );
+	}
+
+	/**
 	 * Gets a instance of a dependency
 	 * @param string $name
 	 * @param string $compare

@@ -47,4 +47,11 @@ interface DependencyInterface {
 	 * @return mixed
 	 */
 	public function get( $name );
+
+	/**
+	 * Returns true if the dependency exists
+	 * @param $name string
+	 * @return mixed
+	 */
+	public function has( $name );
 } 
