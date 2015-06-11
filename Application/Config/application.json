@@ -9,7 +9,7 @@
 	],
 
 	"router": {
-		"/hello": "Application/Controller/Teste",
+		"/hello[/:action]": "Application/Controller/Teste",
 		"/": "Application/Controller/Index"
 	}
 }

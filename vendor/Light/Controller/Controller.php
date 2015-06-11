@@ -7,7 +7,7 @@ use Light\Server\ResponseAwareInterface;
 use Light\Server\ResponseInterface;
 use Light\View\ViewInterface;
 
-abstract class Controller implements ControllerInterface, ManagerAwareInterface, ResponseAwareInterface {
+abstract class Controller implements ControllerInterface, ManagerAwareInterface {
 	/**
 	 * @var ViewInterface
 	 */

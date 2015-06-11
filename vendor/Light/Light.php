@@ -59,15 +59,7 @@ class Light {
 	 * Preconfigure the app
 	 */
 	protected function preConfigure() {
-		$dm = $this->getDependencyManager();
 
-		if( $dm->has('Light\Server\Response') )
-			return true;
-
-		$response = new HttpResponse();
-
-		$dm->set('Light\Server\Response', $response);
-		$dm->getAwareContainer()->add('Light\Server\ResponseAwareInterface', 'Light\Server\Response');
 	}
 
 	/**

@@ -11,6 +11,8 @@ class Route implements RouteInterface, ManagerAwareInterface {
 
 	protected $controller;
 
+	protected $matches;
+
 	/**
 	 * @var Manager
 	 */
@@ -30,12 +32,39 @@ class Route implements RouteInterface, ManagerAwareInterface {
 		$this->manager = $manager;
 	}
 
+	public function setMatches( $matches ) {
+		$this->matches = $matches;
+	}
+
+	/**
+	 * @param \ReflectionClass $reflection
+	 * @return \ReflectionMethod
+	 */
+	protected function getAction( \ReflectionClass $reflection ) {
+		$method = false;
+
+		if( $reflection->hasMethod('index') )
+			$method = $reflection->getMethod('index');
+
+		if( !empty( $this->matches['action'] ) ) {
+			try {
+				$method = $reflection->getMethod($this->matches['action']);
+			} catch( \Exception $excecao ) {
+				throw new \Exception('The choosen action does not exist on that controller');
+			}
+		}
+
+		return $method;
+	}
+
 	/**
 	 * Execute the controller if the URI matches
 	 * @return void
 	 */
 	public function execute() {
-		var_dump($this->manager->get($this->getController()));
+		$controller = $this->manager->get($this->getController());
+		$reflection = new \ReflectionClass($controller);
+		$this->getAction($reflection)->invoke($controller);
 	}
 
 	public function getUri() {

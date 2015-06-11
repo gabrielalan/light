@@ -34,6 +34,12 @@ class Manager implements ManagerInterface, ManagerAwareInterface {
 	}
 
 	protected function normalizeRouteUri( $uri ) {
+		// Normalize optional parameters
+		$uri = preg_replace('/\[(\/)?\:([A-z0-9\_\-]{3,})\]/i', '$1(?<$2>[A-z0-9\_\-]*)?', $uri);
+
+		// Normalize required parameters
+		$uri = preg_replace('/\:([A-z0-9\_\-]{3,})/i', '(?<$1>[A-z0-9\_\-]*)', $uri);
+
 		return '/' . preg_replace('/\//i', '\/', $uri) . '/i';
 	}
 
@@ -41,7 +47,8 @@ class Manager implements ManagerInterface, ManagerAwareInterface {
 		foreach( $this->routes as $route ) {
 			$uri = $this->normalizeRouteUri($route->getUri());
 
-			if( preg_match($uri, $_SERVER['REQUEST_URI']) ) {
+			if( preg_match($uri, $_SERVER['REQUEST_URI'], $matches) ) {
+				$route->setMatches($matches);
 				$route->execute();
 				break;
 			}

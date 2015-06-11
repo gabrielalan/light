@@ -12,12 +12,7 @@ interface RouteInterface {
 
 	public function getController();
 
-	/**
-	 * The match method, verifys if the route match
-	 * with current URI
-	 * @return boolean
-	public function test();
-	 */
+	public function setMatches( $matches );
 
 	/**
 	 * Execute the controller if the URI matches

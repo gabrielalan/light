@@ -4,6 +4,8 @@
 	throw new \ErrorException($errstr, $errno);
 });*/
 
+chdir(realpath(dirname(__FILE__)."/../"));
+
 require_once "vendor/Light/System/Loader.php";
 
 $loader = new Light\System\Loader();
