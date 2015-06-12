@@ -14,7 +14,8 @@ interface ControllerInterface {
 
 	/**
 	 * Executes the Controller Action and commands
+	 * @param \ReflectionMethod $action
 	 * @return mixed
 	 */
-	public function run();
+	public function run( \ReflectionMethod $action );
 } 

@@ -8,8 +8,16 @@
 		}
 	],
 
+	"views": {
+		"paths": ["./Application/Views"]
+	},
+
 	"router": {
-		"/hello[/:action]": "Application/Controller/Teste",
-		"/": "Application/Controller/Index"
+		"routes": {
+			"/hello[/:action]": "Application/Controller/Teste",
+			"/": "Application/Controller/Index"
+		},
+
+		"errorController": "Application/Controller/Error"
 	}
 }

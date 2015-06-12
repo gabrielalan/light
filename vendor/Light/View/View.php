@@ -21,6 +21,13 @@ abstract class View implements ViewInterface {
 		$this->template = $path;
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getTemplate() {
+		return $this->template;
+	}
+
 	public function __set( $name, $value ) {
 		$this->properties[$name] = $value;
 	}

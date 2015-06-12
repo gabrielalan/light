@@ -74,9 +74,11 @@ abstract class Controller implements ControllerInterface, ManagerAwareInterface 
 
 	/**
 	 * Run the controller view
+	 * @param \ReflectionMethod $action
 	 * @return mixed|string
 	 */
-	public function run() {
+	public function run( \ReflectionMethod $action ) {
+		$action->invoke($this);
 		return $this->getView()->render();
 	}
 } 

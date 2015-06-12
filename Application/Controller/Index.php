@@ -1,9 +1,9 @@
 <?php
 namespace Application\Controller;
 
-use Light\Controller\Controller;
+use Light\Controller\Html;
 
-class Index extends Controller {
+class Index extends Html {
 
 	public function test() {
 

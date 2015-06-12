@@ -38,20 +38,19 @@ class Route implements RouteInterface, ManagerAwareInterface {
 
 	/**
 	 * @param \ReflectionClass $reflection
+	 * @throws \Exception
 	 * @return \ReflectionMethod
 	 */
 	protected function getAction( \ReflectionClass $reflection ) {
-		$method = false;
+		$name = 'index';
 
-		if( $reflection->hasMethod('index') )
-			$method = $reflection->getMethod('index');
+		if( !empty( $this->matches['action'] ) )
+			$name = $this->matches['action'];
 
-		if( !empty( $this->matches['action'] ) ) {
-			try {
-				$method = $reflection->getMethod($this->matches['action']);
-			} catch( \Exception $excecao ) {
-				throw new \Exception('The choosen action does not exist on that controller');
-			}
+		try {
+			$method = $reflection->getMethod($name);
+		} catch( \Exception $excecao ) {
+			throw new \Exception("The choosen action '{$name}' does not exist on that controller");
 		}
 
 		return $method;
@@ -64,7 +63,7 @@ class Route implements RouteInterface, ManagerAwareInterface {
 	public function execute() {
 		$controller = $this->manager->get($this->getController());
 		$reflection = new \ReflectionClass($controller);
-		$this->getAction($reflection)->invoke($controller);
+		$controller->run( $this->getAction($reflection) );
 	}
 
 	public function getUri() {

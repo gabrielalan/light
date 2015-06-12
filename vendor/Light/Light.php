@@ -7,6 +7,7 @@ use Light\File\Parser\Factory;
 use Light\Server\HttpResponse;
 use Light\System\Configuration\LightConfigurator as Configuration;
 use Light\System\Configuration\ConfigurationInterface;
+use Light\System\ErrorManagement;
 use Light\System\Loader;
 
 class Light {
@@ -41,14 +42,25 @@ class Light {
 		$this->getDependencyManager()->set('Light\System\Loader', $loader);
 	}
 
+	/**
+	 * @param $configuration
+	 * @return Configuration
+	 * @throws File\Parser\Exceptions\ParserNotFoundException
+	 */
+	protected function createConfiguration( $configuration ) {
+		$file = Factory::createByType($configuration);
+		$config = new Configuration($file);
+
+		return $config;
+	}
+
 	protected function setConfiguration( $configuration ) {
 		$dm = $this->getDependencyManager();
 
 		if ($configuration instanceof ConfigurationInterface) {
 			$config = $configuration;
 		} else {
-			$file = Factory::createByType($configuration);
-			$config = new Configuration($file);
+			$config = $this->createConfiguration($configuration);
 		}
 
 		$this->configuration = $config;
@@ -59,7 +71,6 @@ class Light {
 	 * Preconfigure the app
 	 */
 	protected function preConfigure() {
-
 	}
 
 	/**
@@ -68,6 +79,8 @@ class Light {
 	 * @throws File\Parser\Exceptions\ParserNotFoundException
 	 */
 	public function run( $configuration ) {
+		$manager = $this->getDependencyManager();
+
 		try {
 			$this->preConfigure();
 
@@ -75,9 +88,13 @@ class Light {
 
 			$this->configuration->execute();
 
-			$this->getDependencyManager()->get('Light\Router\Manager')->dispatch();
+			$manager->get('Light\Router\Manager')->dispatch();
 		} catch( \Exception $exception ) {
-			var_dump($exception);
+			$management = new ErrorManagement($exception);
+
+			$manager->getAwareContainer()->inject($management);
+
+			$management->manage();
 		}
 	}
 }

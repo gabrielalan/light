@@ -1,9 +1,11 @@
 <?php
 namespace Application\Controller;
 
-class Teste {
+use Light\Controller\Html;
+
+class Teste extends Html {
 
 	public function acao() {
-		var_dump('ACAO');
+		$this->getView()->setTemplate('teste.html');
 	}
 } 
