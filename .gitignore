@@ -1,3 +1,4 @@
 node_modules
 src/libs
 .idea
+phpunit.phar
