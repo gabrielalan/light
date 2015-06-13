@@ -11,7 +11,8 @@ class Factory {
 	 * @return Light\File\Parser\Parser
 	 */
 	public static function createByType( $path ) {
-		$class = 'Light\File\Parser\\' . ucfirst( end( explode('.', $path) ) );
+		$explode = explode('.', $path);
+		$class = 'Light\File\Parser\\' . ucfirst( end( $explode ) );
 
 		if( class_exists( $class ) )
 			return new $class($path);
