@@ -1,0 +1,18 @@
+[29-Aug-2015 10:52:46 America/Sao_Paulo] PHP Fatal error:  Call to a member function get() on null in C:\Projects\Light\Application\Controller\Error.php on line 17
+[29-Aug-2015 10:52:46 America/Sao_Paulo] PHP Stack trace:
+[29-Aug-2015 10:52:46 America/Sao_Paulo] PHP   1. {main}() C:\Projects\Light\public\index.php:0
+[29-Aug-2015 10:52:46 America/Sao_Paulo] PHP   2. Light\Light->run($configuration = *uninitialized*) C:\Projects\Light\public\index.php:17
+[29-Aug-2015 10:52:46 America/Sao_Paulo] PHP   3. Light\System\ErrorManagement->manage() C:\Projects\Light\vendor\Light\Light.php:97
+[29-Aug-2015 10:52:46 America/Sao_Paulo] PHP   4. Light\System\ErrorManagement->runController($controller = *uninitialized*) C:\Projects\Light\vendor\Light\System\ErrorManagement.php:33
+[29-Aug-2015 10:52:46 America/Sao_Paulo] PHP   5. Light\Controller\Controller->run($action = *uninitialized*) C:\Projects\Light\vendor\Light\System\ErrorManagement.php:45
+[29-Aug-2015 10:52:46 America/Sao_Paulo] PHP   6. ReflectionMethod->invoke(*uninitialized*) C:\Projects\Light\vendor\Light\Controller\Controller.php:81
+[29-Aug-2015 10:52:46 America/Sao_Paulo] PHP   7. Application\Controller\Error->index() C:\Projects\Light\vendor\Light\Controller\Controller.php:81
+[29-Aug-2015 10:52:47 America/Sao_Paulo] PHP Fatal error:  Call to a member function get() on null in C:\Projects\Light\Application\Controller\Error.php on line 17
+[29-Aug-2015 10:52:47 America/Sao_Paulo] PHP Stack trace:
+[29-Aug-2015 10:52:47 America/Sao_Paulo] PHP   1. {main}() C:\Projects\Light\public\index.php:0
+[29-Aug-2015 10:52:47 America/Sao_Paulo] PHP   2. Light\Light->run() C:\Projects\Light\public\index.php:17
+[29-Aug-2015 10:52:47 America/Sao_Paulo] PHP   3. Light\System\ErrorManagement->manage() C:\Projects\Light\vendor\Light\Light.php:97
+[29-Aug-2015 10:52:47 America/Sao_Paulo] PHP   4. Light\System\ErrorManagement->runController() C:\Projects\Light\vendor\Light\System\ErrorManagement.php:33
+[29-Aug-2015 10:52:47 America/Sao_Paulo] PHP   5. Light\Controller\Controller->run() C:\Projects\Light\vendor\Light\System\ErrorManagement.php:45
+[29-Aug-2015 10:52:47 America/Sao_Paulo] PHP   6. ReflectionMethod->invoke() C:\Projects\Light\vendor\Light\Controller\Controller.php:81
+[29-Aug-2015 10:52:47 America/Sao_Paulo] PHP   7. Application\Controller\Error->index() C:\Projects\Light\vendor\Light\Controller\Controller.php:81

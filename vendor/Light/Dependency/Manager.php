@@ -16,6 +16,17 @@ class Manager extends Dependency {
 		$this->getAwareContainer()->add( 'Light\Dependency\ManagerAwareInterface', 'Light\Dependency\Manager');
 	}
 
+	protected function makeStringCallable( $className ) {
+		$closure = function() use($className) {
+			$ref = new \ReflectionClass($className);
+			$dependencies = $this->getAwareContainer()->getConstructorDependencies( $ref );
+			$instance = $ref->newInstanceArgs($dependencies);
+			return $instance;
+		};
+
+		return $closure;
+	}
+
 	/**
 	 * Sets a dependency
 	 * @param $name
@@ -23,7 +34,10 @@ class Manager extends Dependency {
 	 * @return mixed|void
 	 */
 	public function set( $name, $instance ) {
-		if( !is_callable($instance) ) {
+
+		if( is_string($instance) ) {
+			$instance = $this->makeStringCallable($instance);
+		} else if( !is_callable($instance) ) {
 			$this->getAwareContainer()->inject($instance);
 		} else {
 			$instance = function() use($instance) {
@@ -63,8 +77,9 @@ class Manager extends Dependency {
 	 * @return mixed
 	 */
 	public function get( $name, $compare = null ) {
-		if( !isset( $this->instances[$name] ) )
+		if( !isset( $this->instances[$name] ) ) {
 			throw new DependencyNotFound("The dependency {$name} can not be found");
+		}
 
 		$instance = $this->instances[$name];
 

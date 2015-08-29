@@ -57,6 +57,25 @@ class Container implements ContainerInterface {
 	}
 
 	/**
+	 * This must return an array with constructor dependencies
+	 * @param $instance
+	 * @return array
+	 */
+	public function getConstructorDependencies($instance) {
+		$ref = $instance instanceof \ReflectionClass ? $instance : new \ReflectionClass($instance);
+		$deps = array();
+
+		foreach( $ref->getConstructor()->getParameters() as $param ) {
+			if( $param->isOptional() )
+				break;
+
+			$deps[] = $this->manager->get($param->getClass()->getName());
+		}
+
+		return $deps;
+	}
+
+	/**
 	 * Verify the instance searching aware interfaces
 	 * @param $instance
 	 * @return mixed

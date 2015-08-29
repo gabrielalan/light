@@ -45,7 +45,7 @@ class Routes extends Part {
 	 */
 	protected function addController( $name, $dependencyName = null ) {
 		$controller = preg_replace('/\//i', '\\', $name);
-		$this->manager->set( !empty($dependencyName) ? $dependencyName : $controller, function() use($controller) { return new $controller(); });
+		$this->manager->set( !empty($dependencyName) ? $dependencyName : $controller, $controller);
 		return $controller;
 	}
 

@@ -26,4 +26,11 @@ interface ContainerInterface {
 	 * @return mixed
 	 */
 	public function inject( $instance );
+
+	/**
+	 * This must return an array with constructor dependencies
+	 * @param $instance
+	 * @return array
+	 */
+	public function getConstructorDependencies( $instance );
 } 
